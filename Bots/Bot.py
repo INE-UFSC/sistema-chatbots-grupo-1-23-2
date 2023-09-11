@@ -3,9 +3,9 @@ import random as r
 
 class Bot(ABC):
 
-    def __init__(self, nome, comandos):
+    def __init__(self, nome):
         self.__nome = nome
-        self.__comandos = comandos
+        self.__comandos = {"1": "Bom dia", "2": "Qual o seu nome?", "3": "Quero um conselho", "4": "Adeus"}
 
     @property
     def nome(self):
@@ -17,10 +17,10 @@ class Bot(ABC):
     
     def mostra_comandos(self):
         resposta = ""
-        for i in range(len(self.__comandos)):
-            resposta += f"{i} - {self.__comandos[i]}\n"
+        for chaves in self.__comandos.keys():
+            resposta += f"{chaves} - {self.__comandos[chaves]}\n"
         return resposta
-    
+
     @abstractmethod
     def apresentacao(self):
         pass
