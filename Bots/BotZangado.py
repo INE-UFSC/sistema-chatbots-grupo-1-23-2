@@ -1,19 +1,11 @@
 from Bots.Bot import Bot
 
 class BotZangado(Bot):
-    def __init__(self, nome):
-        super().__init__(nome)
-        self.__comandos = {"1": ["1 - Bom dia", self.boas_vindas()]}
+    def __init__(self, nome, comandos):
+        super().__init__(nome, comandos)
     
     def apresentacao(self):
-        pass
- 
-    def mostra_comandos(self):
-        string = ""
-        for i in dic:
-            string += f"{i[0]}\n"
-        return "1 - Bom dia\n2 - Qual o seu nome?\n3 - Quero um conselho"
-        
+        return f"Grrrrrr. Meu nome é {self.__nome} e eu te odeio!"
     
     def executa_comando(self,cmd):
         if cmd == "1":
