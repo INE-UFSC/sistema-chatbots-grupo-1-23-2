@@ -1,26 +1,27 @@
-from Bots.Bot import Bot
+from Bot import Bot
 
-class BotZangado(Bot):
+class BotTriste(Bot):
     def __init__(self, nome):
         super().__init__(nome)
         
     def apresentacao(self):
-        return f'Grrrrrr. Meu nome é {self.__nome} e eu te odeio!'    
+        return f"Oi... Meu nome é {self.nome} 😭😭"
+
+    def boas_vindas(self):
+        return f'{self.nome} diz: Certeza que você quer falar comigo? Sou inútil...'    
     
     def executa_comando(self,cmd):
         if cmd == "1":
-           return "Bom
+            return "Dia ta lindo pra escutar Radiohead..."
         elif cmd=="2":
-            self.apresentacao()
+            return f"Ninguém lembra meu nome mesmo... É {self.nome} 😫"
         elif cmd=="3":
-            self.quero_um_conselho()
+            return "Não nascer, é muito melhor..."
         elif cmd=="4" or cmd=="-1":
             self.despedida()
-            exit()
-    
-    def boas_vindas(self):
-        return 
         
-    
     def despedida(self):
-        pass
+        return f"Você não quer falar comigo mais...? 😭😭😭😭"
+    
+pedrogimenez = BotTriste("Pedro Gimenez")
+print(pedrogimenez.apresentacao())

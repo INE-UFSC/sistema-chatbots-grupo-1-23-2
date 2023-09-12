@@ -9,20 +9,19 @@ class BotFeliz(Bot):
     
     def executa_comando(self,cmd):
         if cmd == "1":
-            return self.__comandos[cmd][1]
-        elif cmd==2:
-            self.apresentacao()
-        elif cmd==3:
-            self.quero_um_conselho()
-        elif cmd==-1:
-            self.despedida()
-            exit()
+            return 'Bem-vindo ao chat! Espero que esteja bem'
+        elif cmd== "2":
+            return f'Olá! Meu nomé é {self.__nome}, como você está?'
+        elif cmd== "3":
+            return 'Veja a vida de forma mais positiva!'        
+            
+        elif cmd=="-1" or cmd == "4":
+            return 'Até outra hora! Espero te ver mais uma vez!'
     
     def quero_um_conselho(self):
         return 'Veja a vida de forma mais positiva!'
-    
-    def boas_vindas(self):
-        return 'Bem-vindo ao chat! Espero que esteja bem'
-    
+
     def despedida(self):
         return 'Até outra hora! Espero te ver mais uma vez!'
+
+        

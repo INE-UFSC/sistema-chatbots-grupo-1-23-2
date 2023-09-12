@@ -5,23 +5,20 @@ class BotZangado(Bot):
         super().__init__(nome)
         
     def apresentacao(self):
-        return f'Grrrrrr. Meu nome é {self.__nome} e eu te odeio!'
+        return f'Grrrrrr. Meu nome é {self.nome} e eu te odeio!'
 
     def boas_vindas(self):
-        return f'{self.__nome} diz: Eu não posso acreditar que você me escolheu, GRRRRRR!'    
+        return f'{self.nome} diz: Eu não posso acreditar que você me escolheu, GRRRRRR!'    
     
     def executa_comando(self,cmd):
         if cmd == "1":
             return "Bom dia? Só se for pra você! Péssimo dia pra mim!"
         elif cmd=="2":
-            return f"É sério que você quer que eu repita? É {self.__nome}!!!"
+            return f"É sério que você quer que eu repita? É {self.nome}!!!"
         elif cmd=="3":
             return "Não tenho filho desse tamanho."
         elif cmd=="4" or cmd=="-1":
-            return self.despedida()
+            self.despedida()
         
     def despedida(self):
-        return f"{self.__nome} diz: FINALMENTE, é o dia mais feliz da minha vida. ADEUS!"
-
-yoda = BotZangado("Yoda")
-print(yoda.mostra_comandos())
+        return f"{self.nome} diz: FINALMENTE, é o dia mais feliz da minha vida. ADEUS!"
