@@ -1,37 +1,42 @@
-from Bots.Bot import Bot
+from Bots import Bot
 
 class SistemaChatBot:
-    def __init__(self,nomeEmpresa,lista_bots):
-        self.__empresa=nomeEmpresa
-        ##verificar se a lista de bots contém apenas bots
+    def __init__(self, nomeEmpresa, lista_bots):
+        self.__empresa = nomeEmpresa
         self.__lista_bots=lista_bots
+        if not all(isinstance(bot, Bot) for bot in self.__lista_bots):
+            raise ValueError("A lista deve conter apenas Bots.")
         self.__bot = None
     
     def boas_vindas(self):
-        pass
-        ##mostra mensagem de boas vindas do sistema
+        return f"Olá, esse é o sistema de chatbots da empresa {self.__empresa}\n"
+        
 
     def mostra_menu(self):
-        pass
-        ##mostra o menu de escolha de bots
-    
+        resposta = "Os chat bots disponíveis no momento são:\n"
+        for i in range(len(self.__lista_bots)):
+            resposta += f"{i} - Bot: {self.__lista_bots[i].nome} - Mensagem de apresentação: {self.__lista_bots[i].apresentacao()}\n"
+        return resposta
+            
     def escolhe_bot(self):
-        pass
-        ##faz a entrada de dados do usuário e atribui o objeto ao atributo __bot 
+        bot = int(input("Digite o número do chat bot desejado: "))
+        self.__bot = self.__lista_bots[bot]
+        return f"\n--> {self.__bot.nome} diz: {self.__bot.apresentacao()}\n"
 
     def mostra_comandos_bot(self):
-        pass
-        ##mostra os comandos disponíveis no bot escolhido
-
+        return self.__bot.mostra_comandos()
+       
     def le_envia_comando(self):
-        pass
-        ##faz a entrada de dados do usuário e executa o comando no bot ativo
-
+        comando = input("Digite o comando desejado (ou -1 para fechar o programa e sair): ")
+        return f"--> {self.__bot.nome} diz: {self.__bot.executa_comando(comando)}\n"
+        
     def inicio(self):
-        pass
-        ##mostra mensagem de boas-vindas do sistema
-        ##mostra o menu ao usuário
-        ##escolha do bot      
-        ##mostra mensagens de boas-vindas do bot escolhido
-        ##entra no loop de mostrar comandos do bot e escolher comando do bot até o usuário definir a saída
-        ##ao sair mostrar a mensagem de despedida do bot
+        print(self.boas_vindas())
+        print(self.mostra_menu())
+        print(self.escolhe_bot())
+        
+        while True:
+            print(self.mostra_comandos_bot())
+            print(self.le_envia_comando())
+            if self.__bot.sair == True:
+                break

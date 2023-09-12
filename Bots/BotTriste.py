@@ -21,4 +21,5 @@ class BotTriste(Bot):
             self.despedida()
         
     def despedida(self):
+        self.sair = True
         return f"Você não quer falar mais comigo ...? 😭😭😭😭"

@@ -15,9 +15,10 @@ class BotFeliz(Bot):
         elif cmd== "3":
             return 'Veja a vida de forma mais positiva!'        
         elif cmd=="-1" or cmd == "4":
-            return 'Até outra hora! Espero te ver mais uma vez!'
+            self.despedida()
 
     def despedida(self):
+        self.sair = True
         return 'Até outra hora! Espero te ver mais uma vez!'
 
         

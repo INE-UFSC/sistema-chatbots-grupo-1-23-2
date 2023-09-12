@@ -6,6 +6,15 @@ class Bot(ABC):
     def __init__(self, nome):
         self.__nome = nome
         self.__comandos = {"1": "Bom dia", "2": "Qual o seu nome?", "3": "Quero um conselho", "4": "Adeus"}
+        self.__sair = False
+        
+    @property
+    def sair(self):
+        return self.__sair
+
+    @sair.setter
+    def nome(self, sair):
+        self.__sair = sair
 
     @property
     def nome(self):
