@@ -1,4 +1,4 @@
-from Bot import Bot
+from Bots.Bot import Bot
 
 class BotTriste(Bot):
     def __init__(self, nome):
@@ -8,7 +8,7 @@ class BotTriste(Bot):
         return f"Oi... Meu nome é {self.nome} 😭😭"
 
     def boas_vindas(self):
-        return f'{self.nome} diz: Certeza que você quer falar comigo? Sou inútil...'    
+        return 'Certeza que você quer falar comigo? Sou inútil...'    
     
     def executa_comando(self,cmd):
         if cmd == "1":
@@ -18,7 +18,7 @@ class BotTriste(Bot):
         elif cmd=="3":
             return "Não nascer, é muito melhor..."
         elif cmd=="4" or cmd=="-1":
-            self.despedida()
+            return self.despedida()
         
     def despedida(self):
         self.sair = True

@@ -1,4 +1,4 @@
-from Bot import Bot
+from Bots.Bot import Bot
 
 class BotZangado(Bot):
     def __init__(self, nome):
@@ -8,7 +8,7 @@ class BotZangado(Bot):
         return f'Grrrrrr. Meu nome é {self.nome} e eu te odeio!'
 
     def boas_vindas(self):
-        return f'{self.nome} diz: Eu não posso acreditar que você me escolheu, GRRRRRR!'    
+        return 'Eu não posso acreditar que você me escolheu, GRRRRRR!'    
     
     def executa_comando(self,cmd):
         if cmd == "1":
@@ -18,8 +18,8 @@ class BotZangado(Bot):
         elif cmd=="3":
             return "Não tenho filho desse tamanho."
         elif cmd=="4" or cmd=="-1":
-            self.despedida()
+            return self.despedida()
         
     def despedida(self):
         self.sair = True
-        return f"{self.nome} diz: FINALMENTE, é o dia mais feliz da minha vida. ADEUS!"
+        return f"FINALMENTE, é o dia mais feliz da minha vida. ADEUS!"

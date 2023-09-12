@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-import random as r
 
 class Bot(ABC):
 
@@ -13,7 +12,7 @@ class Bot(ABC):
         return self.__sair
 
     @sair.setter
-    def nome(self, sair):
+    def sair(self, sair):
         self.__sair = sair
 
     @property

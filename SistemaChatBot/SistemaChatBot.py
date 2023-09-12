@@ -1,4 +1,4 @@
-from Bots import Bot
+from Bots.Bot import Bot
 
 class SistemaChatBot:
     def __init__(self, nomeEmpresa, lista_bots):
@@ -21,7 +21,7 @@ class SistemaChatBot:
     def escolhe_bot(self):
         bot = int(input("Digite o número do chat bot desejado: "))
         self.__bot = self.__lista_bots[bot]
-        return f"\n--> {self.__bot.nome} diz: {self.__bot.apresentacao()}\n"
+        return f"\n--> {self.__bot.nome} diz: {self.__bot.boas_vindas()}\n"
 
     def mostra_comandos_bot(self):
         return self.__bot.mostra_comandos()
