@@ -28,6 +28,8 @@ class SistemaChatBot:
        
     def le_envia_comando(self):
         comando = input("Digite o comando desejado (ou -1 para fechar o programa e sair): ")
+        if comando == "-1" or comando == "4":
+            self.__bot.sair = True
         return f"--> {self.__bot.nome} diz: {self.__bot.executa_comando(comando)}\n"
         
     def inicio(self):

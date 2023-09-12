@@ -3,7 +3,7 @@ from Bots.Bot import Bot
 class BotFeliz(Bot):
     def __init__(self, nome):
         super().__init__(nome)
-    
+        
     def apresentacao(self):
         return f'Olá! Meu nomé é {self.nome}, como você está?'
     
@@ -21,7 +21,6 @@ class BotFeliz(Bot):
             return self.despedida()
 
     def despedida(self):
-        self.sair = True
         return 'Até outra hora! Espero te ver mais uma vez!'
 
         

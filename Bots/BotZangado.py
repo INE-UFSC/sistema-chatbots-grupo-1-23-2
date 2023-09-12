@@ -21,5 +21,4 @@ class BotZangado(Bot):
             return self.despedida()
         
     def despedida(self):
-        self.sair = True
         return f"FINALMENTE, é o dia mais feliz da minha vida. ADEUS!"

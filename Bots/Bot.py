@@ -6,6 +6,14 @@ class Bot(ABC):
         self.__nome = nome
         self.__comandos = {"1": "Bom dia", "2": "Qual o seu nome?", "3": "Quero um conselho", "4": "Adeus"}
         self.__sair = False
+    
+    @property
+    def comandos(self):
+        return self.__comandos
+
+    @comandos.setter
+    def comandos(self, comandos):
+        self.__comandos = comandos
         
     @property
     def sair(self):
