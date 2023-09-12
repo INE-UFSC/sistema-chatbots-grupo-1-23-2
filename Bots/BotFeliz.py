@@ -1,7 +1,7 @@
 from Bot import Bot
 
 class BotFeliz(Bot):
-    def __init__(self, nome, comandos):
+    def __init__(self, nome):
         super().__init__(nome)
     
     def apresentacao(self):
@@ -14,12 +14,8 @@ class BotFeliz(Bot):
             return f'Olá! Meu nomé é {self.__nome}, como você está?'
         elif cmd== "3":
             return 'Veja a vida de forma mais positiva!'        
-            
         elif cmd=="-1" or cmd == "4":
             return 'Até outra hora! Espero te ver mais uma vez!'
-    
-    def quero_um_conselho(self):
-        return 'Veja a vida de forma mais positiva!'
 
     def despedida(self):
         return 'Até outra hora! Espero te ver mais uma vez!'

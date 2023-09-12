@@ -21,7 +21,4 @@ class BotTriste(Bot):
             self.despedida()
         
     def despedida(self):
-        return f"Você não quer falar comigo mais...? 😭😭😭😭"
-    
-pedrogimenez = BotTriste("Pedro Gimenez")
-print(pedrogimenez.apresentacao())
+        return f"Você não quer falar mais comigo ...? 😭😭😭😭"
