@@ -17,7 +17,6 @@ class BotFelizinho(Bot):
         return self.comandos[cmd]
         
     def boas_vindas(self):
-    
         return ("Que bom que você me escolheu! Vamos ter uma conversa muito agradável!") 
 
     def despedida(self):
