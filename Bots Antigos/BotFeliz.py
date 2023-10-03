@@ -22,5 +22,3 @@ class BotFeliz(Bot):
 
     def despedida(self):
         return 'Até outra hora! Espero te ver mais uma vez!'
-
-        

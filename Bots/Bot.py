@@ -1,54 +1,58 @@
-from abc import ABC, abstractmethod
+from PerguntaResposta import PerguntaResposta
 
-class Bot(ABC):
-
-    def __init__(self, nome):
+class Bot:
+    def __init__(self, nome, apresentacao, boas_vindas, despedida):
         self.__nome = nome
-        self.__comandos = {"1": "Bom dia", "2": "Qual o seu nome?", "3": "Quero um conselho", "4": "Adeus"}
-        self.__sair = False
+        self.__perguntas_respostas = []
+        self.__apresentacao = apresentacao
+        self.__boas_vindas = boas_vindas
+        self.__despedida = despedida
+
+    @property
+    def perguntas_respostas(self):
+        return self.__perguntas_respostas
     
-    @property
-    def comandos(self):
-        return self.__comandos
-
-    @comandos.setter
-    def comandos(self, comandos):
-        self.__comandos = comandos
-        
-    @property
-    def sair(self):
-        return self.__sair
-
-    @sair.setter
-    def sair(self, sair):
-        self.__sair = sair
-
+    @perguntas_respostas.setter
+    def perguntas_respostas(self, perguntas_respostas):
+        self.__perguntas_respostas = perguntas_respostas
+            
     @property
     def nome(self):
         return self.__nome
-
+    
     @nome.setter
     def nome(self, nome):
         self.__nome = nome
-    
-    def mostra_comandos(self):
-        resposta = ""
-        for chaves in self.__comandos.keys():
-            resposta += f"{chaves} - {self.__comandos[chaves]}\n"
-        return resposta
 
-    @abstractmethod
-    def apresentacao(self):
-        pass
-    
-    @abstractmethod
-    def boas_vindas(self):
-        pass
-
-    @abstractmethod
-    def executa_comando(self, cmd):
-        pass
-
-    @abstractmethod
+    @property
     def despedida(self):
-        pass
+        return self.__despedida
+    
+    @despedida.setter
+    def despedida(self, despedida):
+        self.__despedida = despedida
+
+    @property
+    def apresentacao(self):
+        return self.__apresentacao
+    
+    @apresentacao.setter
+    def apresentacao(self, apresentacao):
+        self.__apresentacao = apresentacao
+    
+    @property
+    def boas_vindas(self):
+        return self.__boas_vindas
+
+    @boas_vindas.setter
+    def boas_vindas(self, boas_vindas):
+        self.__boas_vindas = boas_vindas
+        
+    def add_pergunta_resposta(self, pergunta, resposta):
+        self.__perguntas_respostas.append(PerguntaResposta(pergunta, resposta))
+        
+    def remove_pergunta_resposta(self, pergunta_resposta: PerguntaResposta):
+        if pergunta_resposta in self.__perguntas_respostas:
+            self.__perguntas_respostas.remove(pergunta_resposta)
+        else:
+            raise ValueError("Não é uma pergunta e resposta válida ou não está na lista de perguntas e respostas")
