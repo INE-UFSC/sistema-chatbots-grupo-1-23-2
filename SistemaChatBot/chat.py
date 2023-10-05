@@ -1,5 +1,5 @@
 from Bots.Bot import Bot
-from PerguntaResposta import PerguntaResposta
+from Bots.PerguntaResposta import PerguntaResposta
 
 
 class Chat:

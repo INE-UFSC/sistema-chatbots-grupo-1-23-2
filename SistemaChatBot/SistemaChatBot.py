@@ -2,17 +2,22 @@ from Bots.Bot import Bot
 import pickle
 
 class SistemaChatBot:
-    def __init__(self, nomeEmpresa, lista_bots, arquivo):
+    def __init__(self, nomeEmpresa, arquivo):
         self.__empresa = nomeEmpresa
         self.__arquivo = arquivo
-        self.__lista_bots = lista_bots
-        if not all(isinstance(bot, Bot) for bot in self.__lista_bots):
-            raise ValueError("A lista deve conter apenas Bots.")
-        self.__bot = None
+        self.__lista_bots = []
+        try:
+            self.__load()
+        except FileNotFoundError:
+            self.__dump()
         
     @property
     def lista_bots(self):
         return self.__lista_bots
+    
+    @property
+    def empresa(self):
+        return self.__empresa
     
     def __dump(self):
         f = open(self.__arquivo, 'wb')

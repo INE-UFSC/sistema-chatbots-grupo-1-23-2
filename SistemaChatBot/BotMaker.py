@@ -3,28 +3,23 @@ from Bots.PerguntaResposta import PerguntaResposta
 from SistemaChatBot import SistemaChatBot as scb
 
 class BotMaker:
-    def __init__(self, sistema: scb):
+    def __init__(self, sistema: scb, bot: Bot = None):
         self.__sistema = sistema
         self.__perguntas_respostas = []
+        self.__bot = bot
     
     @property
     def sistema(self):
         return self.__sistema
-        
-    def add_bot(self, nome, apresentacao, boas_vindas, despedida):
-        if self.__nome in [bot.nome for bot in self.sistema.lista_bots]:
-            raise ValueError("Já existe um bot com esse nome")
-        elif nome == "" or apresentacao == "" or boas_vindas == "" or despedida == "" or self.__perguntas_respostas == []:
-            raise ValueError("Por favor, preencha todos os dados do bot")
-        else:
-            self.sistema.lista_bots.append(Bot(nome, apresentacao, boas_vindas, despedida, self.__perguntas_respostas))
     
-    def remove_bot(self, bot: Bot):
-        if bot in self.sistema.lista_bots:
-            self.sistema.lista_bots.remove(bot)
-        else:
-            raise ValueError("Não é um bot válido ou não está na lista de bots")
-        
+    @property
+    def bot(self):
+        return self.__bot
+    
+    @property
+    def perguntas_respostas(self):
+        return self.__perguntas_respostas
+    
     def add_pergunta_resposta(self, pergunta, resposta):
         self.__perguntas_respostas.append(PerguntaResposta(pergunta, resposta))
         
@@ -33,3 +28,30 @@ class BotMaker:
             self.__perguntas_respostas.remove(pergunta_resposta)
         else:
             raise ValueError("Não é uma pergunta e resposta válida ou não está na lista de perguntas e respostas")
+        
+    def editar_pergunta_resposta(self, pergunta_resposta: PerguntaResposta, pergunta_nova: str, resposta_nova: str):
+        pergunta_resposta.pergunta = pergunta_nova
+        pergunta_resposta.resposta = resposta_nova
+        
+    def cria_bot(self, nome, apresentacao, boas_vindas, despedida):
+        if self.__nome in [bot.nome for bot in self.sistema.lista_bots]:
+            raise ValueError("Já existe um bot com esse nome")
+        elif nome == "" or apresentacao == "" or boas_vindas == "" or despedida == "" or self.__perguntas_respostas == []:
+            raise ValueError("Por favor, preencha todos os dados do bot")
+        else:
+            self.sistema.addbot(Bot(nome, apresentacao, boas_vindas, despedida, self.__perguntas_respostas))
+    
+    def remove_bot(self, bot: Bot):
+        if bot in self.sistema.lista_bots:
+            self.sistema.removebot(bot)
+        else:
+            raise ValueError("Não é um bot válido ou não está na lista de bots")
+        
+    def editar_bot(self, nome_novo: str, apresentacao_nova: str, boas_vindas_nova: str, despedida_nova: str):
+        if self.__bot != None:
+            self.__bot.nome = nome_novo
+            self.__bot.apresentacao = apresentacao_nova
+            self.__bot.boas_vindas = boas_vindas_nova
+            self.__bot.despedida = despedida_nova
+        else:
+            raise ValueError("Não há um bot selecionado")
