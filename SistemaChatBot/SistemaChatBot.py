@@ -24,7 +24,7 @@ class SistemaChatBot:
         self.__listabots = pickle.load(f)
         f.close()
     
-    def addbot(self, bot):
+    def addbot(self, bot):                              
         if not bot in self.lista_bots:
             self.lista_bots.append(bot)
             self.__dump()
