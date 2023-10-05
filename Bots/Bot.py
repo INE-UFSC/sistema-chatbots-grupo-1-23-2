@@ -1,9 +1,7 @@
-from PerguntaResposta import PerguntaResposta
-
 class Bot:
-    def __init__(self, nome, apresentacao, boas_vindas, despedida):
+    def __init__(self, nome, apresentacao, boas_vindas, despedida, perguntas_respostas):
         self.__nome = nome
-        self.__perguntas_respostas = []
+        self.__perguntas_respostas = perguntas_respostas
         self.__apresentacao = apresentacao
         self.__boas_vindas = boas_vindas
         self.__despedida = despedida
@@ -47,12 +45,3 @@ class Bot:
     @boas_vindas.setter
     def boas_vindas(self, boas_vindas):
         self.__boas_vindas = boas_vindas
-        
-    def add_pergunta_resposta(self, pergunta, resposta):
-        self.__perguntas_respostas.append(PerguntaResposta(pergunta, resposta))
-        
-    def remove_pergunta_resposta(self, pergunta_resposta: PerguntaResposta):
-        if pergunta_resposta in self.__perguntas_respostas:
-            self.__perguntas_respostas.remove(pergunta_resposta)
-        else:
-            raise ValueError("Não é uma pergunta e resposta válida ou não está na lista de perguntas e respostas")

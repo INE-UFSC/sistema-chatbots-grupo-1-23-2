@@ -1,0 +1,9 @@
+criar coisas para mostrar no "terminal"
+(tudo em uma string gigante, concatenando novas respostas com \n)
+- apresentacao inicial
+{nome}: {bot.apresentacao}
+- {nome}: por favor selecione uma pergunta \n
+* usuario escolheu *
+- Usuário: {pergunta}
+- {nome}: {resposta}
+

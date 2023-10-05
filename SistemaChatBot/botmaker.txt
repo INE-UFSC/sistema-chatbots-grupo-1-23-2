@@ -1,0 +1,11 @@
+*- CLASSE BOTMAKER -*
+- não recebe nada no init apenas dá atributos
+- tem atributos (nome, apresentacao, boas_vindas, despedida)
+- tem como atributo uma lista de perguntas e respostas vazia = []
+- funcao add pergunta (pergunta: str, resposta: str)
+    self.listapergunta.append(Pergunta(pergunta, resposta))
+- funcao editar pergunta_resposta (pergunta: PerguntaResposta, pergunta: str, resposta: str)
+- funcao remove pergunta (pergunta: PerguntaResposta)
+    self.listapergunta.remove(pergunta)
+- funcao criar bot (fazer funcao que crie bot direto pela classe Bot(self.nome, self.apresentacao...))
+- funcao editar bot (recebe bot como parametro e edita todos os atributos de bot)
