@@ -45,3 +45,6 @@ class Bot:
     @boas_vindas.setter
     def boas_vindas(self, boas_vindas):
         self.__boas_vindas = boas_vindas
+        
+    def __str__(self):
+        return f'{self.nome}: "{self.apresentacao}"'

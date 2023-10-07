@@ -25,12 +25,9 @@ class MenuInicialView:
         
     def tela_criacao(self, perg_resp: list = [1, 2, "banana"]):
         string = "batata com batata, rodrigo rei!\n\ntom nada."
-        self.__container = [
-            [sg.Text('Sistema ChatBot EMPRESA', font=('Montserrat', 24, "bold"))],
-            [sg.Text('Você está conversando com o bot YODA, seja gentil!', font=('Montserrat', 16))],
-            [sg.Multiline(string, size=(72, 20), font=('Montserrat', 14), autoscroll=True, disabled=True, pad=(10, 18))],
-            [sg.Text(' Selecione sua pergunta:', font=('Montserrat', 16)), sg.Combo(["bot.perguntas_respostas batabtatantbatejvgg ghjghejhge gjeghgj"], size=(40, 1), readonly=True), sg.Button('Enviar', size=(10, 1))]
-            ]
+        self.__container = [sg.Button(
+                    [sg.Text("batata", expand_x=True, justification='center')],
+                    [sg.Text("batata", expand_x=True, justification='center')],)]
         
         self.__window = sg.Window(
             "Criador de Bots", self.__container, font=("Montserrat", 14))

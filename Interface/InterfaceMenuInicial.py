@@ -15,5 +15,7 @@ class MenuInicialView:
             [sg.Text('', size=(15, 1))],
             [sg.Button('BotMaker', size=(25, 1), pad=(5, 0)), sg.Button('Chat', size=(25, 1), pad=(5, 0))],
         ]
+        self.__window = sg.Window(
+            "Menu Inicial", self.__container, font=("Montserrat", 14))
         
     
