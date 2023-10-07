@@ -24,12 +24,13 @@ class MenuInicialView:
             "Selecionador do BotMaker", self.__container, font=("Montserrat", 14))
         
     def tela_criacao(self, perg_resp: list = [1, 2, "banana"]):
+        string = "batata com batata, rodrigo rei!\n\ntom nada."
         self.__container = [
-            [sg.Text('Criador de Perguntas e Respostas:', font=('Montserrat', 24, "bold"))],
-            [sg.Text('Pergunta:', font=('Montserrat', 16)), sg.InputText(key="pergunta", default_text=f"{25+4}", pad=(0, 10))],
-            [sg.Text('Resposta:', font=('Montserrat', 16)), sg.InputText(key="resposta")],
-            [sg.Button('Salvar', size=(12,1), pad=(0, 15))]
-        ]
+            [sg.Text('Sistema ChatBot EMPRESA', font=('Montserrat', 24, "bold"))],
+            [sg.Text('Você está conversando com o bot YODA, seja gentil!', font=('Montserrat', 16))],
+            [sg.Multiline(string, size=(72, 20), font=('Montserrat', 14), autoscroll=True, disabled=True, pad=(10, 18))],
+            [sg.Text(' Selecione sua pergunta:', font=('Montserrat', 16)), sg.Combo(["bot.perguntas_respostas batabtatantbatejvgg ghjghejhge gjeghgj"], size=(40, 1), readonly=True), sg.Button('Enviar', size=(10, 1))]
+            ]
         
         self.__window = sg.Window(
             "Criador de Bots", self.__container, font=("Montserrat", 14))
