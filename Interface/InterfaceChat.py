@@ -29,3 +29,6 @@ class InterfaceChat:
         
     def le_eventos(self):
         return self.__window.read()
+    
+    def close(self):
+        self.__window.close()

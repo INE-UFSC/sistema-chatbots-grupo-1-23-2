@@ -21,7 +21,7 @@ class BotMakerView:
         self.__window = sg.Window(
             "Selecionador do BotMaker", self.__container, font=("Montserrat", 14))
     
-    def tela_criacao(self, perg_resp: list = [1, 2, "banana"]):
+    def tela_criacao(self, perg_resp: list):
         self.__container = [
             [sg.Text('Criar um novo Bot', font=('Montserrat', 24, "bold"))],
             [sg.Text('Por favor, preencha os dados abaixo:', font=('Montserrat', 16))],
@@ -84,5 +84,7 @@ class BotMakerView:
     def le_eventos(self):
         return self.__window.read()
         
+    def close(self):
+        self.__window.close()
     
         

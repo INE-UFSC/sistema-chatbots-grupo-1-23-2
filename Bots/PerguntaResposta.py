@@ -11,5 +11,13 @@ class PerguntaResposta:
     def resposta(self):
         return self.__resposta
     
+    @pergunta.setter
+    def pergunta(self, pergunta):
+        self.__pergunta = pergunta
+    
+    @resposta.setter
+    def resposta(self, resposta):
+        self.__resposta = resposta
+    
     def __str__(self):
         return self.pergunta

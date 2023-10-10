@@ -1,4 +1,3 @@
-from Bots.Bot import Bot
 import pickle
 
 class SistemaChatBot:
@@ -21,12 +20,12 @@ class SistemaChatBot:
     
     def __dump(self):
         f = open(self.__arquivo, 'wb')
-        pickle.dump(self.__listabots, f)
+        pickle.dump(self.__lista_bots, f)
         f.close()
         
     def __load(self):
         f = open(self.__arquivo, 'rb')
-        self.__listabots = pickle.load(f)
+        self.__lista_bots = pickle.load(f)
         f.close()
     
     def addbot(self, bot):                              
