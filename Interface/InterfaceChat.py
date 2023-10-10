@@ -26,3 +26,6 @@ class InterfaceChat:
         
         self.__window = sg.Window(
             f"ChatBot com {bot.nome}", self.__container, font=("Montserrat", 14))
+        
+    def le_eventos(self):
+        return self.__window.read()

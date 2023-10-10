@@ -18,4 +18,5 @@ class MenuInicialView:
         self.__window = sg.Window(
             "Menu Inicial", self.__container, font=("Montserrat", 14))
         
-    
+    def le_eventos(self):
+        return self.__window.read()
