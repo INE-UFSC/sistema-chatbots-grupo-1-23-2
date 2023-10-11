@@ -7,6 +7,10 @@ class InterfaceChat:
     def __init__(self, sistema: scb):
         self.__sistema = sistema
     
+    @property
+    def window(self):
+        return self.__window
+    
     def tela_selecao_bot(self):
         self.__container = [
             [sg.Text('Por favor selecione um bot', font=('Montserrat', 24, "bold"))],
@@ -14,6 +18,7 @@ class InterfaceChat:
             [sg.Button('Ok', size=(5,1))], sg.Button('Voltar', size=(5,1))]
         self.__window = sg.Window(
             "Selecao de Bot", self.__container, font=("Montserrat", 14))
+        return self.window
         
     def tela_chat(self, bot: Bot, mensagem: str):
         self.__container = [
@@ -26,9 +31,5 @@ class InterfaceChat:
         
         self.__window = sg.Window(
             f"ChatBot com {bot.nome}", self.__container, font=("Montserrat", 14))
+        return self.window
         
-    def le_eventos(self):
-        return self.__window.read()
-    
-    def close(self):
-        self.__window.close()

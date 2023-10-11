@@ -7,6 +7,10 @@ class MenuInicialView:
         self.__container = []
         self.__window = sg.Window(
             "Menu Inicial", self.__container, font=("Montserrat", 14))
+        
+    @property
+    def window(self):
+        return self.__window
     
     def tela_inicial(self):
         self.__container = [
@@ -17,9 +21,5 @@ class MenuInicialView:
         ]
         self.__window = sg.Window(
             "Menu Inicial", self.__container, font=("Montserrat", 14))
-        
-    def le_eventos(self):
-        return self.__window.read()
+        return self.window
     
-    def close(self):
-        self.__window.close()

@@ -2,15 +2,27 @@ import PySimpleGUI as sg
 from Bots.PerguntaResposta import PerguntaResposta
 from SistemaChatBot.SistemaChatBot import SistemaChatBot as scb
 from Bots.Bot import Bot
+from SistemaChatBot.BotMaker import BotMaker
 
 class BotMakerView:
-    def __init__(self, sistema: scb):
+    def __init__(self, sistema: scb, botmaker: BotMaker):
         self.__sistema = sistema
         self.__container = []
+        self.__botmaker = botmaker
+        self.__window = sg.Window(
+            "Criador de Bots", self.__container, font=("Montserrat", 14))
 
     @property
     def sistema(self):
         return self.__sistema
+    
+    @property
+    def window(self):
+        return self.__window
+    
+    @property
+    def botmaker(self):
+        return self.__botmaker
     
     def tela_selecao_inicial(self):
         self.__container = [
@@ -20,8 +32,9 @@ class BotMakerView:
         ]
         self.__window = sg.Window(
             "Selecionador do BotMaker", self.__container, font=("Montserrat", 14))
+        return self.window
     
-    def tela_criacao(self, perg_resp: list):
+    def tela_criacao(self):
         self.__container = [
             [sg.Text('Criar um novo Bot', font=('Montserrat', 24, "bold"))],
             [sg.Text('Por favor, preencha os dados abaixo:', font=('Montserrat', 16))],
@@ -30,12 +43,13 @@ class BotMakerView:
             [sg.Text('Apresentação do bot:'), sg.InputText(key="apresentacao", size=(40, 1))],
             [sg.Text('Mensagem de boas vindas:'), sg.InputText(key="boas_vindas", size=(36, 1))],
             [sg.Text('Mensagem de despedida:'), sg.InputText(key="despedida", size=(38, 1))],
-            [sg.Text('Perguntas e respostas:'), sg.Combo(perg_resp, size=(30, 1)), sg.Button('Editar', size=(10, 1)), sg.Button('Novo', size=(10, 1))],
+            [sg.Text('Perguntas e respostas:'), sg.Combo(self.botmaker.perguntas_respostas, size=(30, 1), key="pergunta_resposta"), sg.Button('Editar', size=(10, 1)), sg.Button('Novo', size=(10, 1))],
             [sg.Text('', size=(15, 1))],
             [sg.Button('Criar', size=(25, 1), pad=(5, 0)), sg.Button('Voltar', size=(25, 1), pad=(5, 0))],
         ]
         self.__window = sg.Window(
             "Criador de Bots", self.__container, font=("Montserrat", 14))
+        return self.window
     
     def tela_criar_pergunta_resposta(self):
         self.__container = [
@@ -46,6 +60,7 @@ class BotMakerView:
         ]
         self.__window = sg.Window(
             "Criador de Pergunta", self.__container, font=("Montserrat", 14))
+        return self.window
         
     def tela_editar_pergunta_resposta(self, pergunta: PerguntaResposta):
         self.__container = [
@@ -56,6 +71,7 @@ class BotMakerView:
         
         self.__window = sg.Window(
             "Editor de Pergunta", self.__container, font=("Montserrat", 14))
+        return self.window
         
     def tela_selecao_bot(self):
         self.__container = [
@@ -64,6 +80,7 @@ class BotMakerView:
             [sg.Button('Ok', size=(5,1))], sg.Button('Voltar', size=(5,1))]
         self.__window = sg.Window(
             "Selecao de Bot", self.__container, font=("Montserrat", 14))
+        return self.window
         
     def tela_edicao_bot(self, bot: Bot):
         self.__container = [
@@ -80,11 +97,8 @@ class BotMakerView:
         ]
         self.__window = sg.Window(
             "Editor de Bot", self.__container, font=("Montserrat", 14))
+        return self.window
        
-    def le_eventos(self):
-        return self.__window.read()
-        
-    def close(self):
-        self.__window.close()
+
     
         

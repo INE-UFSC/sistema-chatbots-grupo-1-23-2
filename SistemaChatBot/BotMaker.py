@@ -3,10 +3,10 @@ from Bots.PerguntaResposta import PerguntaResposta
 from SistemaChatBot import SistemaChatBot as scb
 
 class BotMaker:
-    def __init__(self, sistema: scb, bot: Bot = None):
+    def __init__(self, sistema: scb):
         self.__sistema = sistema
         self.__perguntas_respostas = []
-        self.__bot = bot
+        self.__bot = None
     
     @property
     def sistema(self):
@@ -55,3 +55,7 @@ class BotMaker:
             self.__bot.despedida = despedida_nova
         else:
             raise ValueError("Não há um bot selecionado")
+        
+    def clean(self):
+        self.__perguntas_respostas = []
+        self.__bot = None
