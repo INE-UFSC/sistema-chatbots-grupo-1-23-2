@@ -52,12 +52,15 @@ class Controle:
         self.menuprincipal()
     
     def menuprincipal(self): # menu que inicia tudo
+        self.window.close()
+        self.window = self.viewmenu.tela_inicial()
+        
         while True:
             evento, valor = self.window.read()
 
             if evento == sg.WINDOW_CLOSED:
                 self.window.close()
-                return
+                break
 
             if evento == 'BotMaker':
                 self.botmaker_selecao()
@@ -74,9 +77,9 @@ class Controle:
 
             if evento == sg.WINDOW_CLOSED:
                 self.window.close()
-                return
+                break
 
-            if evento == 'Criar':
+            elif evento == 'Criar':
                 self.botmaker_criar()
                 
             elif evento == 'Editar':
@@ -84,6 +87,9 @@ class Controle:
                     sg.popup("Não há bots para editar!")
                 else:
                     pass
+                
+            elif evento == 'Voltar':
+                self.menuprincipal()
                 
             
     def botmaker_criar(self): # janela em que cria um bot
@@ -96,9 +102,9 @@ class Controle:
 
             if evento == sg.WINDOW_CLOSED:
                 self.window.close()
-                return
+                break
             
-            if evento == 'Editar': # botao para editar uma pergunta existente
+            elif evento == 'Editar': # botao para editar uma pergunta existente
                 self.atualizar_valores(valor)
                 if valor["pergunta_resposta"] == "":
                     sg.popup("Por favor, selecione uma pergunta!")
@@ -106,13 +112,21 @@ class Controle:
                     self.editar_pergunta(valor["pergunta_resposta"])
                 
             elif evento == 'Novo': # criar nova pergunta
+                self.atualizar_valores(valor)
                 self.criar_pergunta()
 
             elif evento == 'Criar':
-                pass
+                try:
+                    self.botmaker.cria_bot(valor["nome"], valor["apresentacao"], valor["boas_vindas"], valor["despedida"])
+                    sg.popup(f"O Bot {valor['nome']} foi criado com sucesso!")
+                    self.menuprincipal()
+                except ValueError as e:
+                    sg.popup(e)
+                
             
             elif evento == 'Voltar':
-                pass
+                self.botmaker.clean()
+                self.botmaker_selecao()
         
     def editar_pergunta(self, pergunta): # janela em que edita uma pergunta existente
         self.window.close()
@@ -123,7 +137,7 @@ class Controle:
 
             if evento == sg.WINDOW_CLOSED:
                 self.window.close()
-                return
+                break
             
             elif evento == 'Salvar':
                 if valor["pergunta"] == "" or valor["resposta"] == "": # verifica se existem valores vazios
@@ -131,6 +145,9 @@ class Controle:
                 else: # edita a classe pergunta com valores novos
                     self.botmaker.editar_pergunta_resposta(pergunta, valor["pergunta"], valor["resposta"])
                     self.botmaker_criar() # volta pra tela de criacao de bot
+            
+            elif evento == 'Voltar':
+                self.botmaker_criar()
                     
     def criar_pergunta(self): # cria uma nova pergunta
         self.window.close()
@@ -141,7 +158,7 @@ class Controle:
 
             if evento == sg.WINDOW_CLOSED:
                 self.window.close()
-                return
+                break
             
             elif evento == 'Salvar': # verifica se existem valores vazios
                 if valor["pergunta"] == "" or valor["resposta"] == "":
@@ -150,9 +167,9 @@ class Controle:
                     self.botmaker.add_pergunta_resposta(valor["pergunta"], valor["resposta"])
                     self.botmaker_criar()
                     
+            elif evento == 'Voltar':
+                self.botmaker_criar()
+                    
     def atualizar_valores(self, valor): # atualiza os valores da tela de criacao de bot
-        self.window["pergunta_resposta"].update(values=self.botmaker.perguntas_respostas)
-        self.window["nome"].update(defaultvalue=valor["nome"])
-        self.window["apresentacao"].update(defaultvalue=valor["apresentacao"])
-        self.window["boas_vindas"].update(defaultvalue=valor["boas_vindas"])
-        self.window["despedida"].update(defaultvalue=valor["despedida"])
+        dicionario = {"nome": valor["nome"], "apresentacao": valor["apresentacao"], "boas_vindas": valor["boas_vindas"], "despedida": valor["despedida"]}
+        self.botmaker.valores_padrao = dicionario

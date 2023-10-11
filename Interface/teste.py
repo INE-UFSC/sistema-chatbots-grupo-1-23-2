@@ -1,4 +1,7 @@
 import PySimpleGUI as sg
+
+# Define the layout of the window
+import PySimpleGUI as sg
 from Bots.PerguntaResposta import PerguntaResposta
 from SistemaChatBot.SistemaChatBot import SistemaChatBot as scb
 from Bots.Bot import Bot
@@ -101,5 +104,17 @@ class BotMakerView:
         return self.window
        
 
-    
+view = BotMakerView(scb("capital", "teste.pkl"), BotMaker(scb("capital", "teste.pkl")))
         
+
+# Create the window
+window = view.tela_criacao()
+
+# Loop through the window events
+while True:
+    event, values = window.read()
+    if event == sg.WIN_CLOSED or event == 'Exit':
+        break
+
+# Close the window
+window.close()
