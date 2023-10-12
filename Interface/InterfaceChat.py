@@ -11,11 +11,16 @@ class InterfaceChat:
     def window(self):
         return self.__window
     
+    @property
+    def sistema(self):
+        return self.__sistema
+    
     def tela_selecao_bot(self):
         self.__container = [
             [sg.Text('Por favor selecione um bot', font=('Montserrat', 24, "bold"))],
-            [sg.Text('Bot:', font=('Montserrat', 16), pad=(0, 18)), sg.Combo(self.sistema.lista_bots, readonly=True)],
-            [sg.Button('Ok', size=(5,1))], sg.Button('Voltar', size=(5,1))]
+            [sg.Text('Bot:', font=('Montserrat', 16), pad=(0, 18)), sg.Combo(self.sistema.lista_bots, readonly=True, key='bot')], 
+            [sg.Button('Ok', size=(5,1)), sg.Button('Voltar', size=(5,1))]
+        ]
         self.__window = sg.Window(
             "Selecao de Bot", self.__container, font=("Montserrat", 14))
         return self.window

@@ -66,7 +66,43 @@ class Controle:
                 self.botmaker_selecao()
                 
             elif evento == "Chat":
-                pass
+                self.selecao_bot()
+
+    def selecao_bot(self): # janela em que o usuário seleciona com qual bot irá conversar
+        self.window.close()
+        self.window = self.viewchat.tela_selecao_bot()
+
+        while True:
+            evento, valor = self.window.read()
+
+            if evento == sg.WINDOW_CLOSED:
+                self.window.close()
+                break
+
+            elif evento == "Voltar":
+                self.window.close
+                self.menuprincipal() 
+
+            elif evento == "Ok":
+                if valor["bot"] == "":
+                    sg.popup("Por favor selecione um bot!")
+                else:
+                    self.tela_chatbot(valor["bot"], "teste")
+
+    def tela_chatbot(self, bot, mensagem):
+        self.window.close()
+        self.window = self.viewchat.tela_chat(bot, mensagem)
+        
+        while True:
+            evento, valor = self.window.read()
+
+            if evento == sg.WINDOW_CLOSED:
+                self.window.close()
+                break
+
+            elif evento == 'Voltar':
+                self.selecao_bot()
+
                 
     def botmaker_selecao(self): # janela em que seleciona se deve criar ou editar um bot
         self.window.close()
