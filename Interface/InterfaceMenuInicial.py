@@ -17,7 +17,7 @@ class MenuInicialView:
             [sg.Text(f'Bem vindo ao ChatBot da empresa {self.__sistema.empresa}!', font=('Montserrat', 24, "bold"))],
             [sg.Text('Por favor, selecione uma opção:', font=('Montserrat', 18))],
             [sg.Text('', size=(15, 1))],
-            [sg.Button('BotMaker', size=(25, 1), pad=(5, 0)), sg.Button('Chat', size=(25, 1), pad=(5, 0))],
+            [sg.Button('BotMaker', size=(21, 1), pad=(5, 3)), sg.Button('Chat', size=(21, 1), pad=(5, 3)), sg.Button("Sair", size=(21,1), pad=(5,3))]
         ]
         self.__window = sg.Window(
             "Menu Inicial", self.__container, font=("Montserrat", 14))

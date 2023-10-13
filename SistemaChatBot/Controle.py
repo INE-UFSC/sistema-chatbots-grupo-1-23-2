@@ -13,7 +13,9 @@ class Controle:
         self.__viewbotmaker = BotMakerView(self.sistema, self.__botmaker) # interfaces do botmaker
         self.__viewchat = InterfaceChat(self.sistema) # interfaces do chat
         self.__window = None # janela atual
-        
+        self.__mensagem = ""
+        self.__bot_atual = None
+
     # getters 
         
     @property
@@ -68,6 +70,10 @@ class Controle:
             elif evento == "Chat":
                 self.selecao_bot()
 
+            elif evento == "Sair":
+                self.window.close()
+                break
+
     def selecao_bot(self): # janela em que o usuário seleciona com qual bot irá conversar
         self.window.close()
         self.window = self.viewchat.tela_selecao_bot()
@@ -87,11 +93,14 @@ class Controle:
                 if valor["bot"] == "":
                     sg.popup("Por favor selecione um bot!")
                 else:
-                    self.tela_chatbot(valor["bot"], "teste")
+                    self.__bot_atual = valor['bot']
+                    sg.popup(f"Bot {self.__bot_atual.nome}: {self.__bot_atual.boas_vindas}")
+                    self.tela_chatbot(self.__bot_atual)
+                    
 
-    def tela_chatbot(self, bot, mensagem):
+    def tela_chatbot(self, bot):
         self.window.close()
-        self.window = self.viewchat.tela_chat(bot, mensagem)
+        self.window = self.viewchat.tela_chat(bot)
         
         while True:
             evento, valor = self.window.read()
@@ -101,7 +110,13 @@ class Controle:
                 break
 
             elif evento == 'Voltar':
+                sg.popup(f"Bot {self.__bot_atual.nome}: {self.__bot_atual.despedida}")
+                self.__mensagem = ''
                 self.selecao_bot()
+            
+            elif evento == "Enviar":
+                self.__mensagem += f"Usuário: {valor["pergunta"]}\n\nBot {self.__bot_atual.nome}: {valor["pergunta"].resposta}\n\n"
+                self.window['-OUT-'].update(self.__mensagem)
 
                 
     def botmaker_selecao(self): # janela em que seleciona se deve criar ou editar um bot
@@ -128,7 +143,7 @@ class Controle:
                 self.menuprincipal()
                 
             
-    def botmaker_criar(self): # janela em que cria um bot
+    def botmaker_criar(self): # janela em que se cria um bot
         self.window.close()
         self.window = self.viewbotmaker.tela_criacao()
         
