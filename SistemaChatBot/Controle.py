@@ -91,10 +91,10 @@ class Controle:
 
             elif evento == "Ok":
                 if valor["bot"] == "":
-                    sg.popup("Por favor selecione um bot!")
+                    sg.PopupError("Por favor selecione um bot!")
                 else:
                     self.__bot_atual = valor['bot']
-                    sg.popup(f"Bot {self.__bot_atual.nome}: {self.__bot_atual.boas_vindas}")
+                    sg.popup(f"Bot {self.__bot_atual.nome}: {self.__bot_atual.boas_vindas}", title=f"O Bot {self.__bot_atual.nome} te dá boas vindas")
                     self.tela_chatbot(self.__bot_atual)
                     
 
@@ -110,12 +110,12 @@ class Controle:
                 break
 
             elif evento == 'Voltar':
-                sg.popup(f"Bot {self.__bot_atual.nome}: {self.__bot_atual.despedida}")
+                sg.popup(f"Bot {self.__bot_atual.nome}: {self.__bot_atual.despedida}", title="Despedida")
                 self.__mensagem = ''
                 self.selecao_bot()
             
             elif evento == "Enviar":
-                self.__mensagem += f"Usuário: {valor["pergunta"]}\n\nBot {self.__bot_atual.nome}: {valor["pergunta"].resposta}\n\n"
+                self.__mensagem += f"Usuário: {valor['pergunta']}\n\nBot {self.__bot_atual.nome}: {valor['pergunta'].resposta}\n\n"
                 self.window['-OUT-'].update(self.__mensagem)
 
                 
@@ -135,7 +135,7 @@ class Controle:
                 
             elif evento == 'Editar':
                 if self.sistema.lista_bots == []:
-                    sg.popup("Não há bots para editar!")
+                    sg.PopupError("Não há bots para editar!")
                 else:
                     pass
                 
@@ -158,7 +158,7 @@ class Controle:
             elif evento == 'Editar': # botao para editar uma pergunta existente
                 self.atualizar_valores(valor)
                 if valor["pergunta_resposta"] == "":
-                    sg.popup("Por favor, selecione uma pergunta!")
+                    sg.PopupError("Por favor, selecione uma pergunta!")
                 else:
                     self.editar_pergunta(valor["pergunta_resposta"])
                 
@@ -169,10 +169,10 @@ class Controle:
             elif evento == 'Criar':
                 try:
                     self.botmaker.cria_bot(valor["nome"], valor["apresentacao"], valor["boas_vindas"], valor["despedida"])
-                    sg.popup(f"O Bot {valor['nome']} foi criado com sucesso!")
+                    sg.popup(f"O Bot {valor['nome']} foi criado com sucesso!", title="Criação bem sucedida")
                     self.menuprincipal()
                 except ValueError as e:
-                    sg.popup(e)
+                    sg.PopupError(e)
                 
             
             elif evento == 'Voltar':
@@ -192,7 +192,7 @@ class Controle:
             
             elif evento == 'Salvar':
                 if valor["pergunta"] == "" or valor["resposta"] == "": # verifica se existem valores vazios
-                    sg.popup("Por favor, não deixe espaços vazios!")
+                    sg.PopupError("Por favor, não deixe espaços vazios!")
                 else: # edita a classe pergunta com valores novos
                     self.botmaker.editar_pergunta_resposta(pergunta, valor["pergunta"], valor["resposta"])
                     self.botmaker_criar() # volta pra tela de criacao de bot
@@ -213,7 +213,7 @@ class Controle:
             
             elif evento == 'Salvar': # verifica se existem valores vazios
                 if valor["pergunta"] == "" or valor["resposta"] == "":
-                    sg.popup("Por favor, não deixe espaços vazios!")
+                    sg.PopupError("Por favor, não deixe espaços vazios!")
                 else:
                     self.botmaker.add_pergunta_resposta(valor["pergunta"], valor["resposta"])
                     self.botmaker_criar()
