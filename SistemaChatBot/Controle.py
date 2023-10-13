@@ -4,6 +4,7 @@ from Interface.InterfaceBotMaker import BotMakerView
 from Interface.InterfaceChat import InterfaceChat
 from Interface.InterfaceMenuInicial import MenuInicialView
 from SistemaChatBot.BotMaker import BotMaker
+from SistemaChatBot.chat import Chat
 
 class Controle:
     def __init__(self, nome_empresa: str):
@@ -13,7 +14,7 @@ class Controle:
         self.__viewbotmaker = BotMakerView(self.sistema, self.__botmaker) # interfaces do botmaker
         self.__viewchat = InterfaceChat(self.sistema) # interfaces do chat
         self.__window = None # janela atual
-        self.__mensagem = ""
+        self.__chat = Chat()
         self.__bot_atual = None
 
     # getters 
@@ -91,7 +92,7 @@ class Controle:
 
             elif evento == "Ok":
                 if valor["bot"] == "":
-                    sg.PopupError("Por favor selecione um bot!")
+                    sg.PopupError("Por favor selecione um bot!", title=f"Erro!")   
                 else:
                     self.__bot_atual = valor['bot']
                     sg.popup(f"Bot {self.__bot_atual.nome}: {self.__bot_atual.boas_vindas}", title=f"O Bot {self.__bot_atual.nome} te dá boas vindas")
@@ -115,8 +116,12 @@ class Controle:
                 self.selecao_bot()
             
             elif evento == "Enviar":
-                self.__mensagem += f"Usuário: {valor['pergunta']}\n\nBot {self.__bot_atual.nome}: {valor['pergunta'].resposta}\n\n"
-                self.window['-OUT-'].update(self.__mensagem)
+                if valor["pergunta"] == '':
+                    sg.PopupError(f"Por favor escolha uma pergunta!", title=f"Erro!")
+                
+                else:
+                    self.__mensagem += f"Usuário: {valor['pergunta']}\n\nBot {self.__bot_atual.nome}: {valor['pergunta'].resposta}\n\n"
+                    self.window['-OUT-'].update(self.__mensagem)
 
                 
     def botmaker_selecao(self): # janela em que seleciona se deve criar ou editar um bot

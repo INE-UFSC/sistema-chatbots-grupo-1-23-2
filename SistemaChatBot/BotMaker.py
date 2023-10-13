@@ -8,7 +8,7 @@ class BotMaker:
         self.__perguntas_respostas = []
         self.__valores_padrao = {"nome": "", "apresentacao": "", "boas_vindas": "", "despedida": "", "pergunta_resposta": ""}
         self.__bot = None
-    
+            
     @property
     def sistema(self):
         return self.__sistema

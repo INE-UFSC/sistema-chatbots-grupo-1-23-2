@@ -4,10 +4,23 @@ from Bots.PerguntaResposta import PerguntaResposta
 class Chat:
     def __init__(self, bot):
         self.__bot = bot
+        self.__mensagem = ''
+        
+    @property
+    def mensagem(self):
+        return self.__mensagem
+    
+    @mensagem.setter
+    def mensagem(self, mensagem):
+        self.__mensagem = mensagem
 
     @property
     def bot(self):
         return self.__bot
+    
+    @bot.setter
+    def bot(self, bot):
+        self.__bot = bot
 
     def apresentacao(self):
         return f"{self.bot.nome}: {self.bot.apresentacao}"
