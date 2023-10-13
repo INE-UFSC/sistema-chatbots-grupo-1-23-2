@@ -84,9 +84,9 @@ class Controle:
                 
             elif evento == 'Editar':
                 if self.sistema.lista_bots == []:
-                    sg.popup("Não há bots para editar!")
+                    sg.popup("Não há bots para editar. Por favor, crie um.")
                 else:
-                    pass
+                    self.selecao_bot()
                 
             elif evento == 'Voltar':
                 self.menuprincipal()
@@ -128,7 +128,7 @@ class Controle:
                 self.botmaker.clean()
                 self.botmaker_selecao()
         
-    def editar_pergunta(self, pergunta): # janela em que edita uma pergunta existente
+    def editar_pergunta(self, pergunta, tipo: str): # janela em que edita uma pergunta existente
         self.window.close()
         self.window = self.viewbotmaker.tela_editar_pergunta_resposta(pergunta)
         
@@ -149,7 +149,7 @@ class Controle:
             elif evento == 'Voltar':
                 self.botmaker_criar()
                     
-    def criar_pergunta(self): # cria uma nova pergunta
+    def criar_pergunta(self, tipo: str): # cria uma nova pergunta
         self.window.close()
         self.window = self.viewbotmaker.tela_criar_pergunta_resposta()
     
@@ -173,3 +173,59 @@ class Controle:
     def atualizar_valores(self, valor): # atualiza os valores da tela de criacao de bot
         dicionario = {"nome": valor["nome"], "apresentacao": valor["apresentacao"], "boas_vindas": valor["boas_vindas"], "despedida": valor["despedida"]}
         self.botmaker.valores_padrao = dicionario
+        
+    def selecao_bot(self):
+        self.window.close()
+        self.window = self.viewbotmaker.tela_selecao_bot()
+    
+        while True:
+            evento, valor = self.window.read()
+
+            if evento == sg.WINDOW_CLOSED:
+                self.window.close()
+                break
+            
+            elif evento == 'Ok': # verifica se existem valores vazios
+                if valor["bot"] == "":
+                    sg.popup("Por favor, selecione um bot.")
+                else:
+                    self.botmaker.bot = valor["bot"]
+                    self.botmaker_editar()
+                    
+            elif evento == 'Voltar':
+                self.botmaker_selecao()
+                
+    def botmaker_editar(self):
+        self.window.close()
+        self.window = self.viewbotmaker.tela_edicao_bot(self.botmaker.bot)
+        
+        while True:
+            evento, valor = self.window.read()
+
+            if evento == sg.WINDOW_CLOSED:
+                self.window.close()
+                break
+            
+            elif evento == 'Editar': # botao para editar uma pergunta existente
+                self.atualizar_valores(valor)
+                if valor["pergunta_resposta"] == "":
+                    sg.popup("Por favor, selecione uma pergunta!")
+                else:
+                    self.editar_pergunta(valor["pergunta_resposta"])
+                
+            elif evento == 'Novo': # criar nova pergunta
+                self.atualizar_valores(valor)
+                self.criar_pergunta()
+
+            elif evento == 'Confirmar':
+                try:
+                    self.botmaker.editar_bot(valor["nome"], valor["apresentacao"], valor["boas_vindas"], valor["despedida"])
+                    sg.popup(f"O Bot {valor['nome']} foi criado com sucesso!")
+                    self.menuprincipal()
+                except ValueError as e:
+                    sg.popup(e)
+                
+            
+            elif evento == 'Voltar':
+                self.botmaker.clean()
+                self.botmaker_selecao()

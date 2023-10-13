@@ -76,9 +76,9 @@ class BotMakerView:
         
     def tela_selecao_bot(self):
         self.__container = [
-            [sg.Text('Por favor selecione um bot', font=('Montserrat', 24, "bold"))],
-            [sg.Text('Bot:', font=('Montserrat', 16), pad=(0, 18)), sg.Combo(self.sistema.lista_bots)],
-            [sg.Button('Ok', size=(5,1))], sg.Button('Voltar', size=(5,1))]
+            [sg.Text('Por favor, selecione um bot para editar', font=('Montserrat', 24, "bold"))],
+            [sg.Text('Bot:', font=('Montserrat', 16), pad=(0, 18)), sg.Combo(self.sistema.lista_bots, key="bot", size=(40, 1))],
+            [sg.Button('Ok', size=(5,1)), sg.Button('Voltar', size=(6,1), pad=(6, 7), button_color=('white', 'gray'))]]
         self.__window = sg.Window(
             "Selecao de Bot", self.__container, font=("Montserrat", 14))
         return self.window
