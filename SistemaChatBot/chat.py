@@ -10,6 +10,7 @@ class Chat:
     def mensagem(self):
         return self.__mensagem
     
+
     @mensagem.setter
     def mensagem(self, mensagem):
         self.__mensagem = mensagem
