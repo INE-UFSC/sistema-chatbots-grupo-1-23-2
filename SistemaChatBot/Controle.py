@@ -4,6 +4,7 @@ from Interface.InterfaceBotMaker import BotMakerView
 from Interface.InterfaceChat import InterfaceChat
 from Interface.InterfaceMenuInicial import MenuInicialView
 from SistemaChatBot.BotMaker import BotMaker
+from SistemaChatBot.chat import Chat
 
 class Controle:
     def __init__(self, nome_empresa: str):
@@ -11,11 +12,17 @@ class Controle:
         self.__viewmenu = MenuInicialView(self.sistema) # interfaces do menu inicial
         self.__botmaker = BotMaker(self.sistema) # classe gerencia o botmaker
         self.__viewbotmaker = BotMakerView(self.sistema, self.__botmaker) # interfaces do botmaker
+        self.__chat = Chat() # instancia o chat 
         self.__viewchat = InterfaceChat(self.sistema) # interfaces do chat
         self.__window = None # janela atual
         self.__anterior = None # estado atual
+        sg.theme('LightGreen6')
         
     # getters e setters
+    
+    @property
+    def chat(self):
+        return self.__chat 
     
     @property
     def sistema(self):
@@ -75,7 +82,58 @@ class Controle:
                 self.botmaker_selecao()
                 
             elif evento == "Chat":
-                pass
+                self.selecao_chat()
+
+            elif evento == "Sair":
+                self.window.close()
+                break
+            
+    def selecao_chat(self): # janela em que o usuário seleciona com qual bot irá conversar
+        self.window.close()
+        self.window = self.viewchat.tela_selecao_bot()
+
+        while True:
+            evento, valor = self.window.read()
+
+            if evento == sg.WINDOW_CLOSED:
+                self.window.close()
+                break
+
+            elif evento == "Voltar":
+                self.window.close
+                self.menuprincipal() 
+
+            elif evento == "Ok":
+                if valor["bot"] == "":
+                    sg.PopupError("Por favor selecione um bot!", title="Erro!")   
+                else:
+                    self.chat.bot = valor['bot']
+                    sg.popup(self.chat.boas_vindas(), title=f"O Bot {self.chat.bot.nome} te dá boas vindas")
+                    self.tela_chatbot(self.chat.bot)
+                    
+    def tela_chatbot(self, bot):
+        self.window.close()
+        self.window = self.viewchat.tela_chat(bot)
+        
+        while True:
+            evento, valor = self.window.read()
+
+            if evento == sg.WINDOW_CLOSED:
+                self.window.close()
+                break
+
+            elif evento == 'Voltar':
+                sg.popup(self.chat.despedida(), title="Despedida")
+                self.chat.clean()
+                self.selecao_chat()
+            
+            elif evento == "Enviar":
+                if valor["pergunta"] == '':
+                    sg.PopupError(f"Por favor, escolha uma pergunta!", title=f"Erro!")
+                
+                else:
+                    self.chat.mensagem += self.chat.mostrar_pergunta_resposta(valor["pergunta"])
+                    self.window['-OUT-'].update(self.chat.mensagem)
                 
     def botmaker_selecao(self): # janela em que seleciona se deve criar ou editar um bot
         self.window.close()
@@ -129,6 +187,7 @@ class Controle:
                 try:
                     self.botmaker.cria_bot(valor["nome"], valor["apresentacao"], valor["boas_vindas"], valor["despedida"])
                     sg.popup(f"O Bot {valor['nome']} foi criado com sucesso!")
+                    self.botmaker.clean()
                     self.menuprincipal()
                 except ValueError as e:
                     sg.popup(e)
@@ -165,6 +224,7 @@ class Controle:
                 try:
                     self.botmaker.editar_bot(valor["nome"], valor["apresentacao"], valor["boas_vindas"], valor["despedida"])
                     sg.popup(f"O Bot {valor['nome']} foi editado com sucesso!")
+                    self.botmaker.clean()
                     self.menuprincipal()
                 except ValueError as e:
                     sg.popup(e)

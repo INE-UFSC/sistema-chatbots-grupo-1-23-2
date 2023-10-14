@@ -44,7 +44,7 @@ class BotMakerView:
             [sg.Text('Apresentação do bot:'), sg.Text('', size=(7, 1)), sg.InputText(key="apresentacao", size=(56, 1), default_text=self.botmaker.valores_padrao["apresentacao"])],
             [sg.Text('Mensagem de boas vindas:'), sg.Text('', size=(3, 1)), sg.InputText(key="boas_vindas", size=(56, 1), default_text=self.botmaker.valores_padrao["boas_vindas"])],
             [sg.Text('Mensagem de despedida:'), sg.Text('', size=(4, 1)), sg.InputText(key="despedida", size=(56, 1), default_text=self.botmaker.valores_padrao["despedida"])],
-            [sg.Text('Perguntas e respostas:'), sg.Text('', size=(6, 1)), sg.Combo(self.botmaker.perguntas_respostas, size=(30, 1), key="pergunta_resposta"), sg.Button('Editar', size=(10, 1)), sg.Button('Novo', size=(10, 1))],
+            [sg.Text('Perguntas e respostas:'), sg.Text('', size=(6, 1)), sg.Combo(self.botmaker.perguntas_respostas, size=(30, 1), key="pergunta_resposta", readonly=True), sg.Button('Editar', size=(10, 1)), sg.Button('Novo', size=(10, 1))],
             [sg.Text('', size=(15, 1))],
             [sg.Button('Criar', size=(25, 1), pad=(5, 0)), sg.Button('Voltar', size=(25, 1), pad=(5, 0), button_color=('white', 'gray'))],
         ]
@@ -77,7 +77,7 @@ class BotMakerView:
     def tela_selecao_bot(self):
         self.__container = [
             [sg.Text('Por favor, selecione um bot para editar', font=('Montserrat', 24, "bold"))],
-            [sg.Text('Bot:', font=('Montserrat', 16), pad=(0, 18)), sg.Combo(self.sistema.lista_bots, key="bot", size=(40, 1))],
+            [sg.Text('Bot:', font=('Montserrat', 16), pad=(0, 18)), sg.Combo(self.sistema.lista_bots, key="bot", size=(40, 1), readonly=True)],
             [sg.Button('Ok', size=(5,1)), sg.Button('Voltar', size=(6,1), pad=(6, 7), button_color=('white', 'gray'))]]
         self.__window = sg.Window(
             "Selecao de Bot", self.__container, font=("Montserrat", 14))
@@ -92,7 +92,7 @@ class BotMakerView:
             [sg.Text('Apresentação do bot:'), sg.InputText(key="apresentacao", default_text=self.botmaker.valores_padrao["apresentacao"], size=(40, 1))],
             [sg.Text('Mensagem de boas vindas:'), sg.InputText(key="boas_vindas", default_text=self.botmaker.valores_padrao["boas_vindas"], size=(36, 1))],
             [sg.Text('Mensagem de despedida:'), sg.InputText(key="despedida", default_text=self.botmaker.valores_padrao["despedida"], size=(38, 1))],
-            [sg.Text('Perguntas e respostas:'), sg.Combo(self.botmaker.perguntas_respostas, size=(30, 1), key="pergunta_resposta"), sg.Button('Editar', size=(10, 1)), sg.Button('Novo', size=(10, 1))],
+            [sg.Text('Perguntas e respostas:'), sg.Combo(self.botmaker.perguntas_respostas, size=(30, 1), key="pergunta_resposta", readonly=True), sg.Button('Editar', size=(10, 1)), sg.Button('Novo', size=(10, 1))],
             [sg.Text('', size=(15, 1))],
             [sg.Button('Confirmar', size=(25, 1), pad=(5, 0)), sg.Button('Voltar', size=(25, 1), pad=(5, 0))],
         ]

@@ -1,4 +1,4 @@
 from SistemaChatBot.Controle import Controle
 
-controle = Controle("Capitalismo")
+controle = Controle("Tyska Corporation")
 controle.inicio()
