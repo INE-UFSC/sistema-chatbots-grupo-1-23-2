@@ -34,6 +34,12 @@ class SistemaChatBot:
             self.__dump()
         else:
             raise ValueError("Bot já está na lista de bots")
+        
+    def editbot(self, bot):
+        if bot in self.lista_bots:
+            self.__dump()
+        else:
+            raise ValueError("Não é um bot válido ou não está na lista de bots")
     
     def removebot(self, bot):
         if bot in self.lista_bots:

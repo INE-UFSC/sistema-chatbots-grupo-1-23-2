@@ -13,9 +13,10 @@ class Controle:
         self.__viewbotmaker = BotMakerView(self.sistema, self.__botmaker) # interfaces do botmaker
         self.__viewchat = InterfaceChat(self.sistema) # interfaces do chat
         self.__window = None # janela atual
+        self.__anterior = None # estado atual
         
-    # getters 
-        
+    # getters e setters
+    
     @property
     def sistema(self):
         return self.__sistema
@@ -39,6 +40,14 @@ class Controle:
     @property
     def window(self):
         return self.__window
+    
+    @property
+    def anterior(self):
+        return self.__anterior
+    
+    @anterior.setter
+    def anterior(self, anterior):
+        self.__anterior = anterior
     
     @window.setter
     def window(self, window):
@@ -93,6 +102,7 @@ class Controle:
                 
             
     def botmaker_criar(self): # janela em que cria um bot
+        self.anterior = self.botmaker_criar
         self.window.close()
         self.window = self.viewbotmaker.tela_criacao()
         
@@ -128,74 +138,8 @@ class Controle:
                 self.botmaker.clean()
                 self.botmaker_selecao()
         
-    def editar_pergunta(self, pergunta, tipo: str): # janela em que edita uma pergunta existente
-        self.window.close()
-        self.window = self.viewbotmaker.tela_editar_pergunta_resposta(pergunta)
-        
-        while True:
-            evento, valor = self.window.read()
-
-            if evento == sg.WINDOW_CLOSED:
-                self.window.close()
-                break
-            
-            elif evento == 'Salvar':
-                if valor["pergunta"] == "" or valor["resposta"] == "": # verifica se existem valores vazios
-                    sg.popup("Por favor, não deixe espaços vazios!")
-                else: # edita a classe pergunta com valores novos
-                    self.botmaker.editar_pergunta_resposta(pergunta, valor["pergunta"], valor["resposta"])
-                    self.botmaker_criar() # volta pra tela de criacao de bot
-            
-            elif evento == 'Voltar':
-                self.botmaker_criar()
-                    
-    def criar_pergunta(self, tipo: str): # cria uma nova pergunta
-        self.window.close()
-        self.window = self.viewbotmaker.tela_criar_pergunta_resposta()
-    
-        while True:
-            evento, valor = self.window.read()
-
-            if evento == sg.WINDOW_CLOSED:
-                self.window.close()
-                break
-            
-            elif evento == 'Salvar': # verifica se existem valores vazios
-                if valor["pergunta"] == "" or valor["resposta"] == "":
-                    sg.popup("Por favor, não deixe espaços vazios!")
-                else:
-                    self.botmaker.add_pergunta_resposta(valor["pergunta"], valor["resposta"])
-                    self.botmaker_criar()
-                    
-            elif evento == 'Voltar':
-                self.botmaker_criar()
-                    
-    def atualizar_valores(self, valor): # atualiza os valores da tela de criacao de bot
-        dicionario = {"nome": valor["nome"], "apresentacao": valor["apresentacao"], "boas_vindas": valor["boas_vindas"], "despedida": valor["despedida"]}
-        self.botmaker.valores_padrao = dicionario
-        
-    def selecao_bot(self):
-        self.window.close()
-        self.window = self.viewbotmaker.tela_selecao_bot()
-    
-        while True:
-            evento, valor = self.window.read()
-
-            if evento == sg.WINDOW_CLOSED:
-                self.window.close()
-                break
-            
-            elif evento == 'Ok': # verifica se existem valores vazios
-                if valor["bot"] == "":
-                    sg.popup("Por favor, selecione um bot.")
-                else:
-                    self.botmaker.bot = valor["bot"]
-                    self.botmaker_editar()
-                    
-            elif evento == 'Voltar':
-                self.botmaker_selecao()
-                
     def botmaker_editar(self):
+        self.__anterior = self.botmaker_editar
         self.window.close()
         self.window = self.viewbotmaker.tela_edicao_bot(self.botmaker.bot)
         
@@ -220,7 +164,7 @@ class Controle:
             elif evento == 'Confirmar':
                 try:
                     self.botmaker.editar_bot(valor["nome"], valor["apresentacao"], valor["boas_vindas"], valor["despedida"])
-                    sg.popup(f"O Bot {valor['nome']} foi criado com sucesso!")
+                    sg.popup(f"O Bot {valor['nome']} foi editado com sucesso!")
                     self.menuprincipal()
                 except ValueError as e:
                     sg.popup(e)
@@ -229,3 +173,72 @@ class Controle:
             elif evento == 'Voltar':
                 self.botmaker.clean()
                 self.botmaker_selecao()
+                
+    def editar_pergunta(self, pergunta): # janela em que edita uma pergunta existente
+        self.window.close()
+        self.window = self.viewbotmaker.tela_editar_pergunta_resposta(pergunta)
+        
+        while True:
+            evento, valor = self.window.read()
+
+            if evento == sg.WINDOW_CLOSED:
+                self.window.close()
+                break
+            
+            elif evento == 'Salvar':
+                if valor["pergunta"] == "" or valor["resposta"] == "": # verifica se existem valores vazios
+                    sg.popup("Por favor, não deixe espaços vazios!")
+                else: # edita a classe pergunta com valores novos
+                    self.botmaker.editar_pergunta_resposta(pergunta, valor["pergunta"], valor["resposta"])
+                    self.anterior() # volta pra tela de criacao de bot
+            
+            elif evento == 'Voltar':
+                self.anterior()
+                    
+    def criar_pergunta(self): # cria uma nova pergunta
+        self.window.close()
+        self.window = self.viewbotmaker.tela_criar_pergunta_resposta()
+    
+        while True:
+            evento, valor = self.window.read()
+
+            if evento == sg.WINDOW_CLOSED:
+                self.window.close()
+                break
+            
+            elif evento == 'Salvar': # verifica se existem valores vazios
+                if valor["pergunta"] == "" or valor["resposta"] == "":
+                    sg.popup("Por favor, não deixe espaços vazios!")
+                else:
+                    self.botmaker.add_pergunta_resposta(valor["pergunta"], valor["resposta"])
+                    self.anterior()
+                    
+            elif evento == 'Voltar':
+                self.anterior()
+                    
+        
+    def selecao_bot(self):
+        self.window.close()
+        self.window = self.viewbotmaker.tela_selecao_bot()
+    
+        while True:
+            evento, valor = self.window.read()
+
+            if evento == sg.WINDOW_CLOSED:
+                self.window.close()
+                break
+            
+            elif evento == 'Ok': # verifica se existem valores vazios
+                if valor["bot"] == "":
+                    sg.popup("Por favor, selecione um bot.")
+                else:
+                    self.botmaker.selecionar_bot(valor["bot"])
+                    self.botmaker_editar()
+                    
+            elif evento == 'Voltar':
+                self.botmaker_selecao()
+                
+                
+    def atualizar_valores(self, valor): # atualiza os valores da tela de criacao de bot
+        dicionario = {"nome": valor["nome"], "apresentacao": valor["apresentacao"], "boas_vindas": valor["boas_vindas"], "despedida": valor["despedida"]}
+        self.botmaker.valores_padrao = dicionario

@@ -32,6 +32,11 @@ class BotMaker:
     @bot.setter
     def bot(self, bot):
         self.__bot = bot
+        
+    def selecionar_bot(self, bot: Bot):
+        self.__bot = bot
+        self.__perguntas_respostas = bot.perguntas_respostas
+        self.__valores_padrao = {"nome": bot.nome, "apresentacao": bot.apresentacao, "boas_vindas": bot.boas_vindas, "despedida": bot.despedida}
 
     def add_pergunta_resposta(self, pergunta, resposta):
         self.__perguntas_respostas.append(PerguntaResposta(pergunta, resposta))
@@ -62,12 +67,13 @@ class BotMaker:
             raise ValueError("Não é um bot válido ou não está na lista de bots")
         
     def editar_bot(self, nome_novo: str, apresentacao_nova: str, boas_vindas_nova: str, despedida_nova: str):
-        if nome_novo in [bot.nome for bot in self.sistema.lista_bots if bot.nome != self.__bot.nome]:
+        if not nome_novo in [bot.nome for bot in self.sistema.lista_bots if bot.nome != self.__bot.nome]:
             self.__bot.nome = nome_novo
             self.__bot.apresentacao = apresentacao_nova
             self.__bot.boas_vindas = boas_vindas_nova
             self.__bot.despedida = despedida_nova
             self.__bot.perguntas_respostas = self.perguntas_respostas
+            self.sistema.editbot(self.__bot)
         else:
             raise ValueError("Já existe um bot com este nome. Por favor, escolha outro nome")
         
